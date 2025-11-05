@@ -9,6 +9,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    command: postgres -c log_statement=all -c log_destination=stderr -c logging_collector=on  # Логи для отладки
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: postgres -c log_statement=all -c log_destination=stderr -c logging_collector=on
 volumes:
   postgres_data:
