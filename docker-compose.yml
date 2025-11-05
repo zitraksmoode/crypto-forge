@@ -1,0 +1,14 @@
+services:  # Список "сервисов" (коробок)
+  postgres:  # Имя сервиса (твоя БД, можно назвать db)
+    image: postgres:15  # "Готовый образ" из Docker Hub (Postgres v15 — стабильная, лёгкая)
+    environment:  # Переменные окружения (как env в системе)
+      POSTGRES_DB: crypto_db  # Имя БД (создастся автоматически)
+      POSTGRES_USER: postgres  # Логин для подключения
+      POSTGRES_PASSWORD: password  # Пароль (в проде — сложный!)
+    ports:  # Порты (чтобы твой app видел БД)
+      - "5432:5432"  # Левый — на компе, правый — внутри контейнера (стандарт Postgres)
+    volumes:  # Томы (диски, чтобы данные не стирались при остановке)
+      - postgres_data:/var/lib/postgresql/data  # Локальный том (папка на компе) → папка БД
+
+volumes:  # Определение томов (внешний список)
+  postgres_data:  # Имя тома (Docker создаст сам)
