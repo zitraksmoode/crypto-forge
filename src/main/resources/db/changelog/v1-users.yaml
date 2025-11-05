@@ -1,29 +1,10 @@
-databaseChangeLog:  # Корень
-  - changeSet:  # Один "патч" (изменение БД)
-      id: 1  # Уникальный ID (для отслеживания, как коммит-hash)
-      author: zitraksmoode  # Кто сделал (ты)
-      changes:  # Список действий
-        - createTable:  # Создай таблицу
-            tableName: users  # Имя таблицы
-            columns:  # Столбцы (поля)
-              - column:  # Один столбец
-                  name: id  # Имя
-                  type: bigint  # Тип (число)
-                  autoIncrement: true  # Авто-увеличение
-                  constraints:  # Ограничения
-                    primaryKey: true  # Первичный ключ
-              - column:  # Следующий столбец
-                  name: email
-                  type: varchar(255)  # Строка до 255 символов
-                  constraints:
-                    unique: true  # Уникальный (нет дубликатов email)
-              # ... (password, jwt_token — аналогично, type varchar/text)
-  - changeSet:  # Второй патч в файле
-      id: 2
+databaseChangeLog:
+  - changeSet:
+      id: 1
       author: zitraksmoode
       changes:
         - createTable:
-            tableName: portfolios  # Таблица балансов
+            tableName: users
             columns:
               - column:
                   name: id
@@ -32,17 +13,41 @@ databaseChangeLog:  # Корень
                   constraints:
                     primaryKey: true
               - column:
-                  name: user_id  # Ссылка на user
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    unique: true
+              - column:
+                  name: password
+                  type: varchar(255)
+              - column:
+                  name: jwt_token
+                  type: text
+  - changeSet:
+      id: 2
+      author: zitraksmoode
+      changes:
+        - createTable:
+            tableName: portfolios
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
                   type: bigint
               - column:
                   name: asset
-                  type: varchar(10)  # Короткая строка (BTC, USDT)
+                  type: varchar(10)
               - column:
                   name: balance
-                  type: decimal(20,8)  # Деньги с 8 знаками после точки
-        - addForeignKeyConstraint:  # Связь таблиц
-            baseTableName: portfolios  # Откуда ссылка
-            baseColumnNames: user_id  # Поле ссылки
-            referencedTableName: users  # Куда (родитель)
-            referencedColumnNames: id  # Поле в родителе
-            constraintName: fk_user  # Имя связи (для удаления)
+                  type: decimal(20,8)
+        - addForeignKeyConstraint:
+            baseTableName: portfolios
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_user
