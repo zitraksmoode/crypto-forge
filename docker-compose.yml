@@ -2,9 +2,9 @@ services:
   postgres:
     image: postgres:15
     environment:
-    - POSTGRES_DB=crypto_db,
-    - POSTGRES_USER=postgres,
-    - POSTGRES_PASSWORD=password
+      POSTGRES_DB: crypto_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ''  # Пустой пароль (две кавычки)
     ports:
     - "5432:5432"
     volumes:
