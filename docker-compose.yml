@@ -4,19 +4,11 @@ services:
     environment:
       POSTGRES_DB: crypto_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    command: >
-      bash -c "
-        echo 'local all all trust' > /var/lib/postgresql/data/pg_hba.conf &&
-        echo 'host all all 0.0.0.0/0 trust' >> /var/lib/postgresql/data/pg_hba.conf &&
-        echo 'host all all ::0/0 trust' >> /var/lib/postgresql/data/pg_hba.conf &&
-        pg_ctl reload -D /var/lib/postgresql/data &&
-        postgres
-      "
 
 volumes:
   postgres_data:
