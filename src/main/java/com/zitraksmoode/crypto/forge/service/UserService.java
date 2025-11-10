@@ -134,5 +134,5 @@ public class UserService {
         repo.delete(user.get());
         log.info("Deleted user {}", userId);
     }
-
+    // Лира я тебя люблю
 }
