@@ -1,9 +1,7 @@
 package com.zitraksmoode.crypto.forge.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +19,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
+    @Column(name = "login")
+    @Min(3)
+    @Max(14)
+    private String login;
 
     @Email(message = "Invalid email")
     @NotBlank(message = "Email required")
